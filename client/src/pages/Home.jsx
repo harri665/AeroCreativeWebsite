@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { API_URL, imgUrl, prefixApiUrl } from '../api'
 import HeroScene from '../components/HeroScene'
 import ModelCard from '../components/ModelCard'
@@ -33,8 +33,10 @@ export default function Home() {
       .catch(() => setLoading(false))
   }, [])
 
-  // Only models with an STL can appear in the 3D hero
-  const stlModels = models.filter(m => m.url)
+  // Only models with an STL can appear in the 3D hero.
+  // Memoized so the array reference is stable — HeroModel's useEffect depends on it
+  // and would restart the entire STL load cycle if the reference changed every render.
+  const stlModels = useMemo(() => models.filter(m => m.stlUrl), [models])
 
   const handleModelChange = useCallback((index) => {
     setCurrentModelIndex(index)
