@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, Routes, Route, useLocation } from 'react-router-dom'
+import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
@@ -8,8 +8,23 @@ import Setup from './pages/Setup.jsx'
 
 function App() {
   const location = useLocation()
+  const navigate = useNavigate()
   const isSetup = location.pathname === '/setup'
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const goToSection = (hash) => {
+    setMenuOpen(false)
+    if (location.pathname === '/') {
+      // Already on home — just scroll
+      document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      // Navigate home, then scroll after render
+      navigate('/')
+      setTimeout(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    }
+  }
 
   // Close menu on route change
   useEffect(() => {
@@ -36,7 +51,7 @@ function App() {
           </button>
           <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
             <li>
-              <a href="/#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+              <a href="#projects" onClick={(e) => { e.preventDefault(); goToSection('projects') }}>Projects</a>
             </li>
             <li>
               <Link
@@ -48,7 +63,7 @@ function App() {
               </Link>
             </li>
             <li>
-              <a href="/#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); goToSection('contact') }}>Contact</a>
             </li>
             <li>
               <a
@@ -65,7 +80,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="AeroCreativeWebsite" element={<Home />} /> {/* for GitHub Pages */}
         <Route path="/project/:id" element={<Project />} />
         <Route path="/about" element={<About />} />
         <Route path="/setup" element={<Setup />} />

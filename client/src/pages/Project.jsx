@@ -131,7 +131,7 @@ export default function Project() {
   return (
     <div className="project-detail-page">
       <div className="project-detail-container">
-        <Link to="/#projects" className="project-back">
+        <Link to="/" className="project-back">
           <span className="slashes">//</span> Back to Projects
         </Link>
 
