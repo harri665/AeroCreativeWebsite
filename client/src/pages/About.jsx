@@ -18,7 +18,7 @@ export default function About() {
             <div className="about-hero-text">
               <div className="section-label">About</div>
               <h1 className="about-hero-title">
-                <span className="slashes">//</span>Andrew Widner
+                <span className="slashes"><span>/</span>/</span>Andrew Widner
               </h1>
               <p className="about-hero-role">
                 Product Designer &bull; 3D Generalist &bull; Maker

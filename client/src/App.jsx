@@ -36,7 +36,7 @@ function App() {
       {!isSetup && (
         <nav className={`navbar ${menuOpen ? 'menu-open' : ''}`}>
           <Link to="/" className="navbar-logo">
-            <span className="slashes">//</span>
+            <span className="slashes"><span>/</span>/</span>
             <span className="brand-name">AEROCREATIVE</span>
             <span className="dot">.</span>
           </Link>
@@ -87,7 +87,7 @@ function App() {
 
       {!isSetup && (
         <footer className="footer">
-          <span className="slashes">//</span> AEROCREATIVE &copy; {new Date().getFullYear()}
+          <span className="slashes"><span>/</span>/</span> AEROCREATIVE &copy; {new Date().getFullYear()}
         </footer>
       )}
     </div>

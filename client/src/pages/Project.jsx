@@ -130,7 +130,7 @@ export default function Project() {
     <div className="project-detail-page">
       <div className="project-detail-container">
         <Link to="/" className="project-back">
-          <span className="slashes">//</span> Back to Projects
+          <span className="slashes"><span>/</span>/</span> Back to Projects
         </Link>
 
         {/* 3D Viewer or Cover Image */}

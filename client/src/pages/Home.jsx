@@ -50,7 +50,7 @@ export default function Home() {
 
         <div className="hero-overlay">
           <h1 className="hero-title">
-            <span className="slashes">//</span>AEROCREATIVE<span className="brand-dot">.</span>
+            <span className="slashes"><span>/</span>/</span>AEROCREATIVE<span className="brand-dot">.</span>
           </h1>
           <p className="hero-subtitle">
             3D Design &bull; Product Development &bull; Digital Fabrication
