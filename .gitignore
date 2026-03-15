@@ -32,6 +32,8 @@ grunt
 # Bower dependency directory (https://bower.io/)
 bower_components
 
+#claude
+.claude
 # node-waf configuration
 lock-wscript
 
