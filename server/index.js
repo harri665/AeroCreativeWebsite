@@ -15,6 +15,7 @@ const DATA_DIR = path.join(__dirname, 'data');
 const CONFIG_PATH = path.join(DATA_DIR, 'admin-config.json');
 const PROJECTS_PATH = path.join(DATA_DIR, 'printables-projects.json');
 const CUSTOM_PROJECTS_PATH = path.join(DATA_DIR, 'custom-projects.json');
+const DOWNLOAD_STATUS_PATH = path.join(DATA_DIR, 'download-status.json');
 
 // Ensure directories exist
 [MODELS_DIR, UPLOADS_DIR, DATA_DIR].forEach(dir => {
@@ -234,8 +235,14 @@ app.get('/api/health', (req, res) => {
 // Track fetch status
 let fetchStatus = { running: false, progress: '', error: null };
 
-// Track STL download status per project
-let downloadStatus = {};
+// Download status — persisted to disk so nodemon restarts don't lose it
+function loadDownloadStatus() {
+  if (!fs.existsSync(DOWNLOAD_STATUS_PATH)) return {};
+  try { return JSON.parse(fs.readFileSync(DOWNLOAD_STATUS_PATH, 'utf8')); } catch { return {}; }
+}
+function saveDownloadStatus(status) {
+  fs.writeFileSync(DOWNLOAD_STATUS_PATH, JSON.stringify(status, null, 2));
+}
 
 // Get all projects with admin state (blacklist, selected STL)
 app.get('/api/admin/projects', (req, res) => {
@@ -303,7 +310,8 @@ app.post('/api/admin/projects/:id/blacklist', (req, res) => {
 // Get STL download status
 app.get('/api/admin/download-status/:id', (req, res) => {
   const { id } = req.params;
-  res.json(downloadStatus[id] || { status: 'idle' });
+  const all = loadDownloadStatus();
+  res.json(all[id] || { status: 'idle' });
 });
 
 // Select display STL for a project and download it (async — responds immediately)
@@ -340,7 +348,9 @@ app.post('/api/admin/projects/:id/select-stl', (req, res) => {
   saveConfig(config);
 
   // Respond immediately
-  downloadStatus[id] = { status: 'downloading', progress: 'Starting browser...' };
+  const initStatus = loadDownloadStatus();
+  initStatus[id] = { status: 'downloading', progress: 'Starting browser...' };
+  saveDownloadStatus(initStatus);
   res.json({ started: true, localFilename });
 
   // Download in background
@@ -348,17 +358,23 @@ app.post('/api/admin/projects/:id/select-stl', (req, res) => {
     try {
       const { downloadSTLFile } = require('./lib/printables');
       console.log(`[STL Download] Starting download for project ${id}, file ${stlFileId}`);
-      downloadStatus[id] = { status: 'downloading', progress: 'Fetching download link...' };
+      const s1 = loadDownloadStatus();
+      s1[id] = { status: 'downloading', progress: 'Fetching download link...' };
+      saveDownloadStatus(s1);
       const result = await downloadSTLFile(stlFileId, id, outputPath);
       const freshConfig = loadConfig();
       freshConfig.selectedStls[id].downloadedAt = new Date().toISOString();
       freshConfig.selectedStls[id].fileSize = result.size;
       saveConfig(freshConfig);
-      downloadStatus[id] = { status: 'done', size: result.size };
+      const s2 = loadDownloadStatus();
+      s2[id] = { status: 'done', size: result.size };
+      saveDownloadStatus(s2);
       console.log(`[STL Download] Success for project ${id}: ${result.size} bytes`);
     } catch (err) {
       console.error(`[STL Download] Failed for project ${id}:`, err.message);
-      downloadStatus[id] = { status: 'error', error: err.message };
+      const s3 = loadDownloadStatus();
+      s3[id] = { status: 'error', error: err.message };
+      saveDownloadStatus(s3);
     }
   })();
 });
@@ -395,7 +411,9 @@ app.post('/api/admin/projects/:id/reset', (req, res) => {
   }
 
   // Clear download status
-  delete downloadStatus[id];
+  const ds = loadDownloadStatus();
+  delete ds[id];
+  saveDownloadStatus(ds);
 
   saveConfig(config);
   res.json({ success: true });
@@ -417,8 +435,8 @@ app.post('/api/admin/reset-all', (req, res) => {
   // Clear projects data
   saveProjects([]);
 
-  // Clear in-memory state
-  downloadStatus = {};
+  // Clear download status file and in-memory fetch state
+  saveDownloadStatus({});
   fetchStatus = { running: false, progress: '', error: null };
 
   res.json({ success: true });

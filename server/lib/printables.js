@@ -219,9 +219,10 @@ async function downloadSTLFile(stlFileId, modelId, outputPath) {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
     await page.goto('https://www.printables.com/', { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {});
 
+    // Printables API requires numeric IDs — parse strings to integers
     const linkResult = await browserGQL(page, 'GetDownloadLink', DOWNLOAD_LINK_MUTATION, {
-      id: stlFileId,
-      modelId: modelId,
+      id: parseInt(stlFileId, 10),
+      modelId: parseInt(modelId, 10),
       fileType: 'stl',
       source: 'model_detail',
     });
