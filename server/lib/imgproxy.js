@@ -7,7 +7,11 @@
  * For remote URLs (https://...), passes them through directly.
  */
 
+// Internal URL for the Express proxy to reach imgproxy
 const IMGPROXY_BASE = process.env.IMGPROXY_URL || 'http://localhost:4501';
+
+// Public URL for clients to reach imgproxy directly (bypasses Express proxy)
+const IMGPROXY_PUBLIC = process.env.IMGPROXY_PUBLIC_URL || '';
 
 // Presets for common sizes used in the frontend
 const PRESETS = {
@@ -43,6 +47,11 @@ function imgproxyUrl(src, preset = 'card') {
     sourceUrl = `local://${src}`;
   }
 
+  // In production, point directly to the public imgproxy domain
+  // In dev, route through Express /api/img proxy
+  if (IMGPROXY_PUBLIC) {
+    return `${IMGPROXY_PUBLIC}/insecure/${processing}/plain/${sourceUrl}`;
+  }
   return `/api/img/insecure/${processing}/plain/${sourceUrl}`;
 }
 

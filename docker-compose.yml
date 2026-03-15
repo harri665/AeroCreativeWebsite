@@ -9,6 +9,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
+      - IMGPROXY_URL=http://andrew-imgproxy:8080
+      - IMGPROXY_PUBLIC_URL=https://andrewimages.harrison-martin.com
     networks:
       - andrew-network
     restart: unless-stopped

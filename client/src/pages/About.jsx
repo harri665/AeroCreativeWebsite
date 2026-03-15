@@ -1,4 +1,4 @@
-import { API_URL } from '../api'
+import { imgUrl } from '../api'
 import MountainDivider from '../components/MountainDivider'
 
 export default function About() {
@@ -10,7 +10,7 @@ export default function About() {
           <div className="about-hero-layout">
             <div className="about-portrait">
               <img
-                src={`${API_URL}/api/img/insecure/rs:fill:560:0/q:85/plain/local:///uploads/andrew-professional.jpg`}
+                src={imgUrl('local:///uploads/andrew-professional.jpg', 'rs:fill:560:0/q:85')}
                 alt="Andrew Widner"
                 className="about-photo"
               />

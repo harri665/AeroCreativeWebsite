@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { API_URL } from '../api'
+import { API_URL, imgUrl } from '../api'
 import HeroScene from '../components/HeroScene'
 import ModelCard from '../components/ModelCard'
 import MountainDivider from '../components/MountainDivider'
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="about-content">
           <div className="about-portrait">
             <img
-              src={`${API_URL}/api/img/insecure/rs:fill:560:0/q:85/plain/local:///uploads/andrew-professional.jpg`}
+              src={imgUrl('local:///uploads/andrew-professional.jpg', 'rs:fill:560:0/q:85')}
               alt="Andrew Widner"
               className="about-photo"
             />
