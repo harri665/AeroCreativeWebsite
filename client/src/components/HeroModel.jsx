@@ -120,26 +120,29 @@ export default function HeroModel({ models, onModelChange }) {
 
   return (
     <group ref={groupRef} rotation={[-0.3, 0, 0]}>
-      {/* Solid model */}
-      <mesh ref={meshRef}>
-        <meshStandardMaterial
-          color="#1a1a1a"
-          metalness={0.7}
-          roughness={0.25}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
+      {/* Match STL orientation used in ModelCard */}
+      <group rotation={[-Math.PI / 2, 0, 0]}>
+        {/* Solid model */}
+        <mesh ref={meshRef}>
+          <meshStandardMaterial
+            color="#1a1a1a"
+            metalness={0.7}
+            roughness={0.25}
+            transparent
+            opacity={0.85}
+          />
+        </mesh>
 
-      {/* Wireframe overlay */}
-      <mesh ref={wireRef}>
-        <meshBasicMaterial
-          color="#FF6B00"
-          wireframe
-          transparent
-          opacity={0.2}
-        />
-      </mesh>
+        {/* Wireframe overlay */}
+        <mesh ref={wireRef}>
+          <meshBasicMaterial
+            color="#FF6B00"
+            wireframe
+            transparent
+            opacity={0.2}
+          />
+        </mesh>
+      </group>
     </group>
   )
 }
