@@ -3,10 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\" \"npm run imgproxy\"",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "client": "npm run dev --prefix client",
     "server": "npm run dev --prefix server",
-    "imgproxy": "docker compose -f imgproxy/docker-compose.yml up",
     "install:all": "concurrently \"npm install --prefix client\" \"npm install --prefix server\""
   },
   "devDependencies": {
