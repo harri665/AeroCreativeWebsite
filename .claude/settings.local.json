@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:awidner15.wixsite.com)",
+      "Bash(find:*)",
+      "WebSearch",
+      "WebFetch(domain:linktr.ee)",
+      "WebFetch(domain:www.aesdes.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(npm install:*)",
+      "Bash(cd:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(npx vite:*)"
+    ]
+  }
+}
