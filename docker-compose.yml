@@ -1,7 +1,7 @@
 services:
   server:
     build:
-      context: ./Src/server
+      context: ./server
       dockerfile: Dockerfile
     container_name: andrew-server
     ports:
@@ -41,7 +41,7 @@ services:
 
   client:
     build:
-      context: ./Src/client
+      context: ./client
       dockerfile: Dockerfile
     container_name: andrew-client
     ports:
