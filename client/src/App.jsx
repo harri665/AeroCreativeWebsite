@@ -65,6 +65,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="AeroCreativeWebsite" element={<Home />} /> {/* for GitHub Pages */}
         <Route path="/project/:id" element={<Project />} />
         <Route path="/about" element={<About />} />
         <Route path="/setup" element={<Setup />} />
