@@ -11,6 +11,9 @@ RUN npm ci --only=production
 # Copy source code
 COPY . .
 
+# Ensure public directories exist (populated on first volume mount)
+RUN mkdir -p /app/public/uploads /app/public/models /app/data
+
 EXPOSE 3001
 
 # Use node directly (no nodemon in production)

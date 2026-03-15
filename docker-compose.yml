@@ -11,6 +11,9 @@ services:
       - PORT=3001
       - IMGPROXY_URL=http://andrew-imgproxy:8080
       - IMGPROXY_PUBLIC_URL=https://andrewimages.harrison-martin.com
+    volumes:
+      - server-data:/app/data
+      - server-public:/app/public
     networks:
       - andrew-network
     restart: unless-stopped
@@ -36,7 +39,7 @@ services:
       - IMGPROXY_ENFORCE_AVIF=true
       - IMGPROXY_PREFERRED_FORMATS=avif,webp
     volumes:
-      - ./server/public:/images:ro
+      - server-public:/images:ro
     networks:
       - andrew-network
     restart: unless-stopped
@@ -54,6 +57,10 @@ services:
     networks:
       - andrew-network
     restart: unless-stopped
+
+volumes:
+  server-data:
+  server-public:
 
 networks:
   andrew-network:
