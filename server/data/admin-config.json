@@ -1,18 +1,4 @@
 {
   "blacklist": [],
-  "selectedStls": {
-    "811050": {
-      "stlFileId": "3441344",
-      "originalName": "Patriot Exosuit.stl",
-      "localFilename": "811050-Patriot_Exosuit.stl",
-      "downloadedAt": "2026-03-15T17:05:45.857Z",
-      "fileSize": 706984
-    },
-    "1575489": {
-      "stlFileId": "6645617",
-      "originalName": "Scrimp.stl",
-      "localFilename": "1575489-Scrimp.stl",
-      "downloadedAt": null
-    }
-  }
+  "selectedStls": {}
 }
