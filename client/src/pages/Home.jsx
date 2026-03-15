@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { API_URL, imgUrl } from '../api'
+import { API_URL, imgUrl, prefixApiUrl } from '../api'
 import HeroScene from '../components/HeroScene'
 import ModelCard from '../components/ModelCard'
 import MountainDivider from '../components/MountainDivider'
@@ -16,16 +16,14 @@ export default function Home() {
         // Normalize and prefix relative URLs with API_URL for production
         const normalized = data.map(m => {
           const model = { ...m, url: m.stlUrl || m.url }
-          if (API_URL) {
-            if (model.url) model.url = API_URL + model.url
-            if (model.stlUrl) model.stlUrl = API_URL + model.stlUrl
-            if (model.coverImage) model.coverImage = API_URL + model.coverImage
-            if (model.images) {
-              model.images = model.images.map(img => ({
-                ...img,
-                url: img.url ? API_URL + img.url : img.url,
-              }))
-            }
+          model.url = prefixApiUrl(model.url)
+          model.stlUrl = prefixApiUrl(model.stlUrl)
+          model.coverImage = prefixApiUrl(model.coverImage)
+          if (model.images) {
+            model.images = model.images.map(img => ({
+              ...img,
+              url: prefixApiUrl(img.url),
+            }))
           }
           return model
         })

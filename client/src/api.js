@@ -11,6 +11,16 @@ export const API_URL = import.meta.env.VITE_API_URL || '';
 export const IMGPROXY_URL = import.meta.env.VITE_IMGPROXY_URL || '';
 
 /**
+ * Prefix a URL with API_URL only if it's a relative path.
+ * Absolute URLs (already pointing at imgproxy/CDN) are returned as-is.
+ */
+export function prefixApiUrl(url) {
+  if (!url || !API_URL) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return API_URL + url;
+}
+
+/**
  * Build an imgproxy URL for a given source image.
  * In dev, routes through Express /api/img proxy.
  * In production, goes directly to the imgproxy domain.

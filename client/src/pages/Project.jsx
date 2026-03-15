@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { API_URL } from '../api'
+import { API_URL, prefixApiUrl } from '../api'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Suspense } from 'react'
@@ -75,17 +75,15 @@ export default function Project() {
         return r.json()
       })
       .then(data => {
-        // Prefix relative URLs with API_URL for production
-        if (API_URL) {
-          if (data.stlUrl) data.stlUrl = API_URL + data.stlUrl
-          if (data.coverImage) data.coverImage = API_URL + data.coverImage
-          if (data.images) {
-            data.images = data.images.map(img => ({
-              ...img,
-              url: img.url ? API_URL + img.url : img.url,
-              originalUrl: img.originalUrl ? API_URL + img.originalUrl : img.originalUrl,
-            }))
-          }
+        // Prefix relative URLs with API_URL for production (absolute URLs are left as-is)
+        data.stlUrl = prefixApiUrl(data.stlUrl)
+        data.coverImage = prefixApiUrl(data.coverImage)
+        if (data.images) {
+          data.images = data.images.map(img => ({
+            ...img,
+            url: prefixApiUrl(img.url),
+            originalUrl: prefixApiUrl(img.originalUrl),
+          }))
         }
         setProject(data)
         setLoading(false)
