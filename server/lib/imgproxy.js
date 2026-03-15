@@ -7,7 +7,7 @@
  * For remote URLs (https://...), passes them through directly.
  */
 
-const IMGPROXY_BASE = process.env.IMGPROXY_URL || 'http://localhost:8081';
+const IMGPROXY_BASE = process.env.IMGPROXY_URL || 'http://localhost:4501';
 
 // Presets for common sizes used in the frontend
 const PRESETS = {
