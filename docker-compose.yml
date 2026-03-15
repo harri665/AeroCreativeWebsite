@@ -3,14 +3,14 @@ services:
     build:
       context: ./Src/server
       dockerfile: Dockerfile
-    container_name: harwood-server
+    container_name: andrew-server
     ports:
       - "3001:3001"
     environment:
       - NODE_ENV=production
       - PORT=3001
     networks:
-      - harwood-network
+      - andrew-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/health"]
@@ -19,19 +19,40 @@ services:
       retries: 3
       start_period: 40s
 
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    container_name: andrew-imgproxy
+    ports:
+      - "8081:8080"
+    environment:
+      - IMGPROXY_ALLOW_ORIGIN=*
+      - IMGPROXY_MAX_SRC_RESOLUTION=50
+      - IMGPROXY_BIND=:8080
+      - IMGPROXY_ALLOWED_SOURCES=local:///,http://,https://
+      - IMGPROXY_LOCAL_FILESYSTEM_ROOT=/images
+      - IMGPROXY_ENFORCE_WEBP=true
+      - IMGPROXY_ENFORCE_AVIF=true
+      - IMGPROXY_PREFERRED_FORMATS=avif,webp
+    volumes:
+      - ./server/public:/images:ro
+    networks:
+      - andrew-network
+    restart: unless-stopped
+
   client:
     build:
       context: ./Src/client
       dockerfile: Dockerfile
-    container_name: harwood-client
+    container_name: andrew-client
     ports:
       - "80:80"
     depends_on:
       - server
+      - imgproxy
     networks:
-      - harwood-network
+      - andrew-network
     restart: unless-stopped
 
 networks:
-  harwood-network:
+  andrew-network:
     driver: bridge

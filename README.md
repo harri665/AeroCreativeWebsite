@@ -1,3 +1,104 @@
+# Notes for andrew: 
+
+# FINDME
+> you can search through the project for findme w/ are sections i thought you would want to change either now or in the future so i tried to make the easy too :) 
+
+
+# HomePage 
+
+### Artist Statement
+> use this as your place to write a 1-2 para decription of your self :) 
+
+[Home.jsx](/client/src/pages/Home.jsx) search for ``` FINDME Artist Statement ```
+
+### Skills List
+> this is the 4 skills in your about section of your home page you can switch this to what ever you want 
+
+[Home.jsx](/client/src/pages/Home.jsx) search for ``` FINDME Skills List ```
+
+this represent 1 card block: 
+```js
+<div className="skill-item">
+    <div className="skill-name">title</div> {/* name of the skill over aching usually*/}
+    <div className="skill-detail">description 1 &amp; desc 2</div> {/* smaller deciptions */}
+</div>
+
+```
+### Contact Links 
+> this is the links you want people to use to reach out to you tbh even if someone want to hire you the chances of them using this is low but they are here if they do :) 
+
+[Home.jsx](/client/src/pages/Home.jsx) search for ``` FINDME Contact Links ```
+
+
+```js
+<a
+    href="www.something.com" {/*put the link you want to go here */}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="contact-link"
+>
+    NAME wjifw {/*put the name you want to show up on the site here */}
+</a>
+```
+
+## AboutPage
+
+### Artist Statement
+> this is the artist statement on the about page change this probaly to something more personal 
+
+[About.jsx](/client/src/pages/About.jsx) search for ``` FINDME Artist Statement ```
+
+
+### Experience 
+>this is the timeline on the about page w/ is meant to be used for like jobs clubs etc ... can be changed :) 
+
+
+[About.jsx](/client/src/pages/About.jsx) search for ``` FINDME Experience ```
+> this is experience section changing existing items should be self explanitory. 
+
+[About.jsx](/client/src/pages/About.jsx) search for ``` FINDME TIMELINE END ```
+> this will give you the point on the timeline where you can add the next item 
+
+this is the template for if you want to add a new item to the experience section 
+
+```js
+<div className="timeline-item">
+<div className="timeline-marker" />
+<div className="timeline-content">
+    <h3 className="timeline-title">TITLE</h3> {/*add timeline name here ex. job title or sthing*/}
+    <p className="timeline-desc"> {/*this should be like the bullet points on your resume :) */}
+        Description 
+    </p>
+</div>
+</div>
+```
+
+# Skills List 
+> i thought it was best to split this into 2 sections digital and physical cards are the same as the ones on the home page 
+
+[About.jsx](/client/src/pages/About.jsx) search for ``` FINDME Skills List ```
+
+
+
+new skill template :) for if you want to add new skills BE CAREFULL TO ADD THEM TO THE CORRECTION SECTION AND IN A SECTION !
+``` js
+<div className="skill-item">
+    <div className="skill-name">Fusion 360</div>
+    <div className="skill-detail">Parametric CAD, CAM</div>
+</div>
+
+```
+
+
+
+
+
+
+
+
+
+
+
 # Harrison Default Web Template
 
 A full-stack web application template with React frontend and Express backend.

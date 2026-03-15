@@ -14,7 +14,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "HarrisonDefaultTemplate": "file:.."
+    "HarrisonDefaultTemplate": "file:..",
+    "multer": "^2.1.1",
+    "websession-api-client": "^0.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

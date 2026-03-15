@@ -13,7 +13,16 @@
       "Bash(cd:*)",
       "Bash(curl:*)",
       "Bash(taskkill:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:www.printables.com)",
+      "Bash(mkdir -p /tmp/websession-pkg)",
+      "Read(//tmp/**)",
+      "Bash(npm pack:*)",
+      "Bash(tar -xzf websession-api-client-0.0.2.tgz)",
+      "Bash(npm view:*)",
+      "Bash(node:*)",
+      "Bash(npm ls:*)"
     ]
   }
 }
